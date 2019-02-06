@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <h1>Stocks Owned:</h1>
+    <table class ="center">
+        <tr>
+            <th>Company Name</th>
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Shares Owned</th>
+            <th>Total Value</th>
+            <th>Net Worth</th>
+        </tr>
+        {% for p in portfolio %}
+        <tr>
+            <td>{{names[loop.index0]}}</td>
+            <td>{{p.symbol}}</td>
+            <td>${{prices[p.symbol]}}</td>
+            <td>{{p.numShares}}</td>
+            {% set total = (prices[p.symbol] * p.numShares) %}
+            <td>${{ total | round(2)}}</td>
+            <td></td>
+        </tr>
+        {% if loop.last %}
+        <tr>
+            <td class="bold">Totals:</td>
+            <td>Cash: ${{cash.cash | round(2)}}</td>
+            <td></td>
+            <td></td>
+            <td>{{ sum_of_stocks | round(2) }}</td>
+            <td>${{ cash.cash + sum_of_stocks }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    <p class ="bold"></p>
+{% endblock %}
